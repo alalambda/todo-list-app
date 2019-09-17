@@ -7,17 +7,17 @@ class Todo extends React.Component {
             background: '#f4f4f4',
             padding: '10px',
             borderBottom: '1px #ccc dotted',
-            textDecoration: this.props.todo.isCompleted ? 'line-through' : 'none'
+            textDecoration: this.props.todo.completed ? 'line-through' : 'none'
         };
     }
 
     render() {
 
-        const { id, title, isCompleted } = this.props.todo;
+        const { id, title, completed } = this.props.todo;
 
         return (
             <div style={this.getStyle()}>
-                <input type="checkbox" checked={isCompleted} onChange={this.props.changeStatus.bind(this, id)} /> {' '}
+                <input type="checkbox" checked={completed} onChange={this.props.changeStatus.bind(this, id)} /> {' '}
                 {title}
                 <button style={deleteButtonStyle} onClick={this.props.deleteTodo.bind(this, id)}>x</button>
             </div>
