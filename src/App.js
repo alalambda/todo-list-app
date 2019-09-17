@@ -1,8 +1,10 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/Header';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import axios from 'axios';
+import About from './pages/About';
 
 const API_ENDPOINT = 'https://jsonplaceholder.typicode.com/todos';
 const LIMIT = '?_limit=10';
@@ -35,9 +37,9 @@ class App extends React.Component {
 
   deleteTodo = (id) => {
     axios.delete(API_ENDPOINT + '/' + id)
-    .then(response => {
-      this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] });
-    });
+      .then(response => {
+        this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] });
+      });
   }
 
   addNewTodo = (title) => {
@@ -47,20 +49,28 @@ class App extends React.Component {
       title,
       completed: false
     }).then(response => {
-      this.setState({ todos: [...this.state.todos, response.data]})
+      this.setState({ todos: [...this.state.todos, response.data] })
     });
   }
 
   render() {
     return (
-      <div className="App">
-        <Header />
-        <TodoForm addNewTodo={this.addNewTodo} />
-        <TodoList todos={this.state.todos} changeStatus={this.changeStatus} deleteTodo={this.deleteTodo} />
-      </div>
+      <Router>
+        <div className="App">
+          <div className="container">
+            <Header />
+            <Route exact path="/" render={props => (
+              <React.Fragment>
+                <TodoForm addNewTodo={this.addNewTodo} />
+                <TodoList todos={this.state.todos} changeStatus={this.changeStatus} deleteTodo={this.deleteTodo} />
+              </React.Fragment>
+            )}></Route>
+            <Route path="/about" component={About} />
+          </div>
+        </div>
+      </Router>
     );
   }
 }
-
 
 export default App;
