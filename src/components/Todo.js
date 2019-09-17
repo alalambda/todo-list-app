@@ -11,6 +11,15 @@ class Todo extends React.Component {
         };
     }
 
+    getDeleteButtonStyle = () => {
+        return {
+            backgroundColor: 'red',
+            color: 'white',
+            borderRadius: '50%',
+            border: 'none'
+        };
+    }
+
     render(){
 
         const {id, title, isCompleted} = this.props.todo;
@@ -19,6 +28,7 @@ class Todo extends React.Component {
             <div style={this.getStyle()}>
                 <input type="checkbox" checked={isCompleted} onChange={this.props.changeStatus.bind(this, id)}/> {' '}
                 {title}
+                <button style={this.getDeleteButtonStyle()} onClick={this.props.deleteTodo.bind(this, id)}>x</button>
             </div>
         );
     }

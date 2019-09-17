@@ -33,11 +33,16 @@ class TodoList extends React.Component {
         }) });
     }
 
+    deleteTodo = (id) => {
+        var filteredTodos = this.state.todos.filter( todo => todo.id !== id);
+        this.setState( { todos: filteredTodos } );
+    }
+
     render(){
 
         return (
             this.state.todos.map((todo) => 
-                <Todo key={todo.id} todo={todo} changeStatus={this.changeStatus} />
+                <Todo key={todo.id} todo={todo} changeStatus={this.changeStatus} deleteTodo={this.deleteTodo} />
             )
         );
     }
